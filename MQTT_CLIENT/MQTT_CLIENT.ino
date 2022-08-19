@@ -4,7 +4,7 @@
 
 const char* ssid = "vivo 1816";
 const char* password = "12345PSR";
-const char* mqtt_server = "broker.mqtt-dashboard.com";
+const char* mqtt_server = "192.168.43.73";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
