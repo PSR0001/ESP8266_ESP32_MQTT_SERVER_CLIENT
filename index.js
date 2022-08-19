@@ -5,6 +5,7 @@ const wsPort = 80
 
 // Here we are creating the Websocket Server that is using the HTTP Server...
 const wss = new WebSocket.Server({ server: httpServer })
+
 wss.on('connection', function connection (ws) {
   const duplex = WebSocket.createWebSocketStream(ws)
   aedes.handle(duplex)
@@ -38,5 +39,8 @@ aedes.on('subscribe', function (subscriptions, client) {
 })
 
 aedes.on('client', function (client) {
+  console.log('new client', client.id)
+})
+aedes.on('outTopic', function (client) {
   console.log('new client', client.id)
 })
