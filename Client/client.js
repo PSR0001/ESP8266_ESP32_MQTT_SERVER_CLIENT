@@ -4,7 +4,10 @@ const mqtt = require('mqtt')
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
-const host = 'ws://localhost:1880'
+const host = 'ws://mqtt-broker-001.herokuapp.com'
+
+let sendMessage=process.argv[2]
+
 
 const options = {
   keepalive: 30,
@@ -36,11 +39,12 @@ client.on('connect', function () {
   // console.log("");
   client.subscribe('topic', { qos: 0 })
   client.subscribe('topic', { qos: 1 })
-  client.publish('topic', 'wss secure connection demo...!', { qos: 0, retain: false })
+  client.publish('topic', sendMessage, { qos: 0, retain: false })
 })
 
 client.on('message', function (topic, message, packet) {
   console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
+  console.log("\n"+JSON.stringify(packet))
 })
 
 client.on('close', function () {

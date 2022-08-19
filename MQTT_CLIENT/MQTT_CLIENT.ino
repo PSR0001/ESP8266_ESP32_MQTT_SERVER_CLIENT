@@ -1,15 +1,18 @@
 
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
+// Update these with values suitable for your network.
+
 const char* ssid = "vivo 1816";
 const char* password = "12345PSR";
-const char* mqtt_server = "broker.emqx.io";
+const char* mqtt_server = "mqtt-broker-001.herokuapp.com";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
-#define MSG_BUFFER_SIZE  (100)
+#define MSG_BUFFER_SIZE  (50)
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
@@ -18,7 +21,7 @@ void setup_wifi() {
   delay(10);
   // We start by connecting to a WiFi network
   Serial.println();
-  Serial.print(F("Connecting to "));
+  Serial.print("Connecting to ");
   Serial.println(ssid);
 
   WiFi.mode(WIFI_STA);
@@ -32,13 +35,13 @@ void setup_wifi() {
   randomSeed(micros());
 
   Serial.println("");
-  Serial.println(F("WiFi connected"));
-  Serial.println(F("IP address: "));
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.print(F("Message arrived ["));
+  Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
   for (int i = 0; i < length; i++) {
@@ -67,10 +70,10 @@ void reconnect() {
     // Attempt to connect
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
-      // ... and resubscribe
-      client.subscribe("topic");
       // Once connected, publish an announcement...
-      client.publish("topic", "hello world");
+      client.publish("outTopic", "hello world");
+      // ... and resubscribe
+      client.subscribe("inTopic");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -103,6 +106,6 @@ void loop() {
     snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish("topic", msg);
+    client.publish("outTopic", msg);
   }
 }
