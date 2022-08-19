@@ -1,7 +1,7 @@
 const aedes = require('aedes')()
 const httpServer = require('http').createServer()
 const WebSocket = require('ws')
-const wsPort = 80
+const wsPort = process.env.PORT ||1880
 
 // Here we are creating the Websocket Server that is using the HTTP Server...
 const wss = new WebSocket.Server({ server: httpServer })
@@ -34,13 +34,13 @@ aedes.on('publish', function (packet, client) {
 
 aedes.on('subscribe', function (subscriptions, client) {
   if (client) {
+    console.log("");
     console.log('subscribe from client', subscriptions, client.id)
+    console.log("");
   }
 })
 
 aedes.on('client', function (client) {
   console.log('new client', client.id)
 })
-aedes.on('outTopic', function (client) {
-  console.log('new client', client.id)
-})
+

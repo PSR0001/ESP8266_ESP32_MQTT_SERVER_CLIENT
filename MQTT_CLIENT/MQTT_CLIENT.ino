@@ -4,12 +4,12 @@
 
 const char* ssid = "vivo 1816";
 const char* password = "12345PSR";
-const char* mqtt_server = "192.168.43.73";
+const char* mqtt_server = "broker.emqx.io";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
-#define MSG_BUFFER_SIZE  (50)
+#define MSG_BUFFER_SIZE  (100)
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
@@ -67,10 +67,10 @@ void reconnect() {
     // Attempt to connect
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
-      // Once connected, publish an announcement...
-      client.publish("outTopic", "hello world");
       // ... and resubscribe
-      client.subscribe("inTopic");
+      client.subscribe("topic");
+      // Once connected, publish an announcement...
+      client.publish("topic", "hello world");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -103,6 +103,6 @@ void loop() {
     snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish("outTopic", msg);
+    client.publish("topic", msg);
   }
 }
