@@ -134,6 +134,24 @@ body{
     border-radius: 5px;
 }
 
+
+/* message class */
+.height-class{
+    height: 350px;
+    overflow-y: scroll;
+}
+.message-class{
+    
+    height:100px;
+}
+
+/* rotate class */
+.rotate {
+    transform: rotate(180deg);
+    transition-delay: 2s;
+  }
+
+
 /* slide bar */
 ::-webkit-scrollbar {
     width: 6px;

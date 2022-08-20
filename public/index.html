@@ -24,7 +24,7 @@
                 </h3>
             </div>
             <div class="Body-custom">
-                <div class="first-custom">
+                <div class="first-custom collapse collapse-horizontal show" id="collapseWidthExample12345">
                     <div class="flex-custom connect-custom google-font">
                         <h5>Connection</h5>
                         <button type="button" class="button-custom" data-bs-toggle="modal"
@@ -109,10 +109,10 @@
 
                                                     <div class="col-md-6  col align-self-end mt-1">
                                                         <div class="form-outline">
-                                                            <buttom type="text" id="client-id"
+                                                            <button type="text" id="client-id"
                                                                 class="form-control btn btn-primary font-custom">
                                                                 Genarate Client id
-                                                            </buttom>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -156,18 +156,22 @@
                 <div class="second-custom">
                     <div class="header-custom">
                         <!-- add toggle javascript -->
-                        <button type="button" id="toggle" class="arow-button">></button>
+                        <button type="button" id="toggle" class="arow-button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseWidthExample12345" aria-expanded="false"
+                            aria-controls="collapseWidthExample12345">></button>
                     </div>
                     <div class="dashboard">
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h3>Connection : </h3>
                             </div>
-                            <button type="button " class="left-button">^</button>
+                            <button type="button " class="left-button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample" aria-expanded="true"
+                                aria-controls="collapseExample">^</button>
                         </div>
 
                         <!-- add conection JS Client ID -->
-                        <div class="container">
+                        <div class="container collapse show" id="collapseExample">
                             <!-- Subecribe form -->
                             <form action="">
                                 <h5 class="grey-color">Subscribe </h5>
@@ -229,10 +233,49 @@
                         </div>
                         <hr>
                         <!-- container end -->
+
+                        <!-- ---------------------------------------------- -->
                         <div class="container">
                             <h5 class="grey-color">Subscriptions</h5>
                             <div class="subscription mb-2">
 
+                                <div class=" m-2 connect-custom">
+                                    <div class="d-flex  justify-content-between ">
+                                        <div class="d-flex mt-1">
+                                            <h5>Topic : </h5>
+
+                                            <!-- include JS -->
+                                            <p class="px-2">"Device ID"</p>
+                                        </div>
+                                        <button class="left-button " type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExample12" aria-expanded="false"
+                                            aria-controls="collapseExample12">
+                                            ^
+                                        </button>
+                                    </div>
+
+                                    <div class="col ">
+                                        <div class="collapse multi-collapse show height-class" id="collapseExample12">
+
+                                            <!-- include JS -->
+                                            <div class="card card-body message-class ">
+                                                <!-- include JS -->
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <h5>Message : </h5>
+                                                        <p>" hello word"</p>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <h5>Time : </h5>
+                                                        <p>7.23 PM</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -245,6 +288,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
+
+        <script src="JS/script.js"></script>
 </body>
 
 </html>
