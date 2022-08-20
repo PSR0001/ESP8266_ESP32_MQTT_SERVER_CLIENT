@@ -4,9 +4,10 @@ const mqtt = require('mqtt')
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
-const host = 'ws://mqtt-broker-001.herokuapp.com'
+// const host = 'tcp://5.196.95.208'
+const host = 'ws://127.0.0.1:1883'
 
-let sendMessage=process.argv[2]
+// let sendMessage=process.argv[2]
 
 
 const options = {
@@ -37,14 +38,16 @@ client.on('error', function (err) {
 client.on('connect', function () {
   console.log('client connected:' + clientId)
   // console.log("");
-  client.subscribe('topic', { qos: 0 })
-  client.subscribe('topic', { qos: 1 })
-  client.publish('topic', sendMessage, { qos: 0, retain: false })
+  client.subscribe('device/123output', { qos: 0 },(sub_message)=>{
+      console.log("Message From Server : "+sub_message);
+  })
+  // client.subscribe('topic', { qos: 1 })
+  //client.publish('topic', sendMessage, { qos: 0, retain: false })
 })
 
 client.on('message', function (topic, message, packet) {
   console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
-  console.log("\n"+JSON.stringify(packet))
+  // console.log("\n"+JSON.stringify(packet))
 })
 
 client.on('close', function () {

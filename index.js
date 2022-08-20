@@ -1,7 +1,7 @@
 const aedes = require('aedes')()
 const httpServer = require('http').createServer()
 const WebSocket = require('ws')
-const wsPort = process.env.PORT ||1880
+const wsPort = process.env.PORT ||1883
 
 // Here we are creating the Websocket Server that is using the HTTP Server...
 const wss = new WebSocket.Server({ server: httpServer })

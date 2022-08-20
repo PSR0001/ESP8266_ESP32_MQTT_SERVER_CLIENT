@@ -7,12 +7,12 @@
 
 const char* ssid = "vivo 1816";
 const char* password = "12345PSR";
-const char* mqtt_server = "mqtt-broker-001.herokuapp.com";
+const char* mqtt_server = "5.196.95.208";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 unsigned long lastMsg = 0;
-#define MSG_BUFFER_SIZE  (50)
+#define MSG_BUFFER_SIZE  (100)
 char msg[MSG_BUFFER_SIZE];
 int value = 0;
 
@@ -71,9 +71,9 @@ void reconnect() {
     if (client.connect(clientId.c_str())) {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish("outTopic", "hello world");
+      client.publish("device/123output", "hello world");
       // ... and resubscribe
-      client.subscribe("inTopic");
+      client.subscribe("device/123input");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -89,6 +89,7 @@ void setup() {
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, 1883);
+  client.setClient(espClient);
   client.setCallback(callback);
 }
 
@@ -106,6 +107,7 @@ void loop() {
     snprintf (msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
     Serial.print("Publish message: ");
     Serial.println(msg);
-    client.publish("outTopic", msg);
+    client.publish("device/123output", msg);
   }
+//  delay(2000);
 }
