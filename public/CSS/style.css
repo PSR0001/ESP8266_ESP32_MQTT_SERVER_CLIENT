@@ -82,9 +82,9 @@ body{
 .second-custom{
     margin: 10px 0 0 6px;
     height: 89vh;
-    background: #9ef79ebc;
+    background: #e9fbe9;
     width: 100%;
-    border-left:3px solid rgb(82, 201, 82);
+    border-left:3px solid #52e052;
     overflow-y: scroll;
 }
 .arow-button{
