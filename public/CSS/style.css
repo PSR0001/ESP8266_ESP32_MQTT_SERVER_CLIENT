@@ -79,10 +79,80 @@ body{
     padding: 3px;
 }
 
-
-
 .second-custom{
-    margin: 5px;
-    height: 50vh;
-    background: rgb(107, 16, 199);
+    margin: 10px 0 0 6px;
+    height: 89vh;
+    background: #9ef79ebc;
+    width: 100%;
+    border-left:3px solid rgb(82, 201, 82);
+    overflow-y: scroll;
 }
+.arow-button{
+    box-shadow: none;
+    border: none;
+    font-weight: bold;
+    background: none;
+    font-size: 20px;
+    border-left: 4px solid grey;
+    height: 100%;
+    padding-bottom: 4px;
+    margin: none;
+    padding: none;
+}
+.header-custom{
+    border: 1px solid rgb(217, 217, 217);
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+  
+}
+.dashboard{
+    margin-top: 20px;
+    margin-left: 10px ;
+}
+.grey-color{
+    color: grey;
+}
+
+.left-button{
+    box-shadow: none;
+    border: none;
+    font-weight: bold;
+    background: none;
+    font-size: 25px; 
+    margin-right: 20px;
+    color: rgb(101, 100, 100);
+}
+
+.subscription{
+    background: rgb(239 239 239);
+    height: 60vh;
+    width: 100%;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+/* slide bar */
+::-webkit-scrollbar {
+    width: 6px;
+    height:6px;
+  }
+  ::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+  body::-webkit-scrollbar-track {
+      /* background-color: #6c7ebb; */
+    border-radius: 0px;
+  }
+  .dark ::-webkit-scrollbar-track{
+      /* background-color: #31313a; */
+      border-radius: 0 10px 10px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    
+   
+    border-radius: 20px;
+  }
+
