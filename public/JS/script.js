@@ -2,7 +2,7 @@
 
 'use strict'
 
-// const mqtt = require('mqtt')
+
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
@@ -51,3 +51,8 @@ client.on('message', function (topic, message, packet) {
   console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
   // console.log("\n"+JSON.stringify(packet))
 })
+
+
+
+
+
