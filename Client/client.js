@@ -4,8 +4,8 @@ const mqtt = require('mqtt')
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
-// const host = 'tcp://5.196.95.208'
-const host = 'ws://127.0.0.1:1883'
+const host = 'tcp://5.196.95.208'
+// const host = 'ws://127.0.0.1:1883'
 
 // let sendMessage=process.argv[2]
 
