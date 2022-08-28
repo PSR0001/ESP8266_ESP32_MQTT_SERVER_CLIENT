@@ -49,7 +49,7 @@ client.on('message', function (topic, message, packet) {
   console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
   // console.log("\n"+JSON.stringify(packet))
 })
-
+//client on
 client.on('close', function () {
   console.log(clientId + ' disconnected')
 })
