@@ -6,6 +6,7 @@ const http = require('http');
 const { instrument } = require("@socket.io/admin-ui");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const { log } = require('console');
 const io = new Server(server, {
   cors: {
     origin: ["https://admin.socket.io"],
@@ -19,9 +20,32 @@ app.use(express.json());
 app.use('/', express.static('public'))
 
 
+// let client,client2,mqtt_status
+
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+io.on("connection", (socket) => {
+  
+
+    io.emit("subscriver", "connected");
+ 
+  
+  console.log(`User with id: ${socket.id} connected!`);
+
+  socket.on("disconnect", () => {
+    console.log(`User with id: ${socket.id} disconnected`);
+  });
+
+});
+
+//admin-ui
+instrument(io, { auth: false });
+
+
+
 
 //HTTP POST request coming ...
 app.post('/mqtt_values',(req,res)=>{
@@ -45,8 +69,8 @@ const options = {
   rejectUnauthorized: false
 }
 
-const client = mqtt.connect(host, options)
-
+ let client = mqtt.connect(host, options)
+ 
 client.on('error', function (err) {
   console.log(err)
   res.send({"status": false, "message": err})
@@ -55,52 +79,26 @@ client.on('error', function (err) {
 
 client.on('connect', function () {
   console.log('client connected:' + req.body.cclientid)
-  res.send({"status": true, "message": "Connection SuccessFull."})
   client.subscribe('mqtt_client', { qos: 0 },(sub_message)=>{
     console.log("Message From Server : "+sub_message);
 })
+  res.send({"status": true, "message": "Connection SuccessFull."})
 })
 
 client.on('message', function (topic, message, packet) {
+  io.emit("subscriver", message.toString());
   console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
 })
 
+
 client.on('close', function () {
-  console.log(clientId + ' disconnected')
+  console.log(req.body.cclientid + ' disconnected')
   res.send({"status": false, "message": "Connection Closed."})
 })
 
 console.log("hola");
+
 })
 
-  // Socket listening 
-  try {
-  
-    io.on("connection", (socket) => {
-  
-      console.log(`User with id: ${socket.id} connected!`);
-  
-      socket.on("disconnect", () => {
-        console.log(`User with id: ${socket.id} disconnected`);
-      });
-    
-  
-      // io.emit("Chart-Data",message)
-      socket.on("Chart-Data", (data) => {
-        // console.log(data);
-        
-        socket.broadcast.emit("Chart-Data", data);
-      });
-      socket.on("RGB-Data", (data) => {
-        // console.log(data);
-        socket.broadcast.emit("RGB-Data", data);
-      });
-  
-    });
-  
-    //admin-ui
-    instrument(io, { auth: false });
-  } catch (error) {
-    console.log(`Could not start the server, ${error}`);
-  }
-  
+
+

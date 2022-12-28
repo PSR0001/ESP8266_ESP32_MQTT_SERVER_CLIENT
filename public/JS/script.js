@@ -49,3 +49,7 @@ async function postData(url = '', data = {}) {
   }
   
 
+// -----------------------MQTT subscribe Code--------------------
+function mqttSubscribe(){
+    console.log("hello")
+}
