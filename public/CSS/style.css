@@ -135,6 +135,22 @@ body{
 }
 
 
+
+#isConnect{
+    margin-right:6px ;
+    height: 13px;
+    width: 13px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
 /* message class */
 .height-class{
     height: 350px;

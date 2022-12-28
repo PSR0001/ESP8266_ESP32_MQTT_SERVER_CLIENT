@@ -1,5 +1,3 @@
-
-
 function generateClientId() {
     const clientId = 'mqtt_' + Math.random().toString(16).substr(2, 8)
     document.getElementById('client-id2').value = clientId
@@ -7,9 +5,7 @@ function generateClientId() {
 
 
 function submitMqttData() {
-    console.log("working")
-
-
+   
     let data = {
         'cname': document.getElementById('form3Example1').value,
         'ccolor': document.getElementById('validationCustom04').options[document.getElementById('validationCustom04').selectedIndex].text,
@@ -27,10 +23,10 @@ function submitMqttData() {
         if(data.status === true){
             console.log(data);
             let connect_button = document.getElementById('create_connection')
+             document.getElementById('isConnect').style.backgroundColor = "#1ce01c"
             connect_button.textContent = "connected"
             connect_button.style.backgroundColor = "green"
         }
-
      });
 }
 
