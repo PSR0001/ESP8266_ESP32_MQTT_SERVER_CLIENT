@@ -10,9 +10,8 @@ const socket = io(URL);
 
  });
 
-//  let Data_Distance;
- //Chart- Data
- socket.on("subscriver", (data) => {
+
+ socket.on("client_status", (data) => {
      console.log(data);
  });
  

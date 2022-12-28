@@ -26,6 +26,7 @@ function submitMqttData() {
              document.getElementById('isConnect').style.backgroundColor = "#1ce01c"
             connect_button.textContent = "connected"
             connect_button.style.backgroundColor = "green"
+            connect_button.disabled = true;
         }
      });
 }
@@ -52,4 +53,6 @@ async function postData(url = '', data = {}) {
 // -----------------------MQTT subscribe Code--------------------
 function mqttSubscribe(){
     console.log("hello")
+    
+    socket.emit("subcrive", document.getElementById('inputCity2').value)
 }

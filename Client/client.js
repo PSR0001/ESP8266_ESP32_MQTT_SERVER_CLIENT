@@ -28,6 +28,8 @@ const options = {
 }
 
 console.log('connecting mqtt client')
+
+
 const client = mqtt.connect(host, options)
 
 client.on('error', function (err) {

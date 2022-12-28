@@ -19,8 +19,7 @@ const port = process.env.PORT || 3000
 app.use(express.json());
 app.use('/', express.static('public'))
 
-
-// let client,client2,mqtt_status
+let client2,mqtt_status
 
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
@@ -38,6 +37,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`User with id: ${socket.id} disconnected`);
   });
+
+  socket.on("subcrive",(data)=>{
+    console.log(data)
+    client2.subcribe(data.toString(), { qos: 0 },(sub_message)=>{
+      console.log("Message From Server : "+sub_message);
+  })
+  })
 
 });
 
@@ -69,20 +75,19 @@ const options = {
   rejectUnauthorized: false
 }
 
- let client = mqtt.connect(host, options)
+ let client = new mqtt.connect(host, options)
  
+client2 = client
+
 client.on('error', function (err) {
   console.log(err)
-  res.send({"status": false, "message": err})
+
   client.end()
 })
 
 client.on('connect', function () {
   console.log('client connected:' + req.body.cclientid)
-  client.subscribe('mqtt_client', { qos: 0 },(sub_message)=>{
-    console.log("Message From Server : "+sub_message);
-})
-  res.send({"status": true, "message": "Connection SuccessFull."})
+  
 })
 
 client.on('message', function (topic, message, packet) {
@@ -93,10 +98,11 @@ client.on('message', function (topic, message, packet) {
 
 client.on('close', function () {
   console.log(req.body.cclientid + ' disconnected')
-  res.send({"status": false, "message": "Connection Closed."})
+  io.emit("client_status","Disconnected")
+  client.end()
 })
 
-console.log("hola");
+res.send({"status": true, "message": "Connection SuccessFull."})
 
 })
 
