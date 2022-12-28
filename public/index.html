@@ -211,11 +211,11 @@
                             </form>
 
                             <!-- Publish Form -->
-                            <form action="">
+                            <form >
                                 <h5 class="grey-color">Publish </h5>
                                 <div class="row" style="margin-right:0;">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="inputCity">
+                                        <input type="text" class="form-control" id="inputCity" value=""/>
                                     </div>
 
                                     <div class="col-md-4 row mb-4">
@@ -230,7 +230,7 @@
                                     </div>
 
                                     <div class="col-md-2">
-                                        <button type="submit" class="btn btn-success">Publish</button>
+                                        <button type="button" onclick="mqttPublish()" class="btn btn-success">Publish</button>
                                     </div>
                                 </div>
                             </form>
@@ -240,7 +240,7 @@
                             <h5 class="grey-color">Message </h5>
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                    style="height: 100px; "></textarea>
+                                    style="height: 100px; " value=""></textarea>
                                 <label for="floatingTextarea2">Comments</label>
                             </div>
                         </div>

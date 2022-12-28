@@ -1,6 +1,7 @@
 function generateClientId() {
     const clientId = 'mqtt_' + Math.random().toString(16).substr(2, 8)
     document.getElementById('client-id2').value = clientId
+    document.getElementById('create_connection').disabled = false
 }
 
 
@@ -51,8 +52,13 @@ async function postData(url = '', data = {}) {
   
 
 // -----------------------MQTT subscribe Code--------------------
-function mqttSubscribe(){
-    console.log("hello")
-    
+function mqttSubscribe(){  
     socket.emit("subcrive", document.getElementById('inputCity2').value)
+}
+function mqttPublish(){
+  let pubData = {
+    "topic": document.getElementById('inputCity').value,
+    "value": document.getElementById('floatingTextarea2').value
+  }
+    socket.emit("publish",pubData)
 }

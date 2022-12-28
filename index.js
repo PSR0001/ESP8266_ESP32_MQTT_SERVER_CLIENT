@@ -40,9 +40,16 @@ io.on("connection", (socket) => {
 
   socket.on("subcrive",(data)=>{
     console.log(data)
-    client2.subcribe(data.toString(), { qos: 0 },(sub_message)=>{
+
+    client2.subscribe(data.toString(), { qos: 0 },(sub_message)=>{
       console.log("Message From Server : "+sub_message);
+    })
   })
+
+  socket.on("publish",(data)=>{
+    console.log(data)
+
+    client2.publish(data.topic, data.value,{ qos: 0, retain: false })
   })
 
 });
@@ -87,7 +94,7 @@ client.on('error', function (err) {
 
 client.on('connect', function () {
   console.log('client connected:' + req.body.cclientid)
-  
+
 })
 
 client.on('message', function (topic, message, packet) {
