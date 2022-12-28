@@ -11,13 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aedes": "^0.47.0",
-    "aedes-persistence-mongodb": "^9.0.0",
-    "mqemitter-mongodb": "^8.1.0",
-    "mqtt": "^4.3.7"
-  },
-  "engines": {
-    "node": " 16.13.2",
-    "npm": " 8.1.2"
+    "@socket.io/admin-ui": "^0.5.1",
+    "express": "^4.18.2",
+    "mqtt": "^4.3.7",
+    "socket.io": "^4.5.4"
   }
 }

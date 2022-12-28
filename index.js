@@ -1,46 +1,59 @@
-const aedes = require('aedes')()
-const httpServer = require('http').createServer()
-//const WebSocket = require('ws')
-const wsPort = process.env.PORT ||1883
+const express = require('express')
+const path = require('path');
+const app = express()
+const http = require('http');
+const { instrument } = require("@socket.io/admin-ui");
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: ["https://admin.socket.io"],
+    credentials: true
+  },
+});
 
-// Here we are creating the Websocket Server that is using the HTTP Server...
-const wss = new WebSocket.Server({ server: httpServer })
+const port = process.env.PORT || 3000
 
-wss.on('connection', function connection (ws) {
-  const duplex = WebSocket.createWebSocketStream(ws)
-  aedes.handle(duplex)
+app.use(express.json());
+// app.use(express.static('public'))
+app.use('/', express.static('public'))
+
+server.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
 
-httpServer.listen(wsPort, function () {
-  console.log('websocket server listening on port', wsPort)
+app.post('/mqtt_values',(req,res)=>{
+  res.send({"status": true})
 })
 
-aedes.on('clientError', function (client, err) {
-  console.log('client error', client.id, err.message, err.stack)
-})
-
-aedes.on('connectionError', function (client, err) {
-  console.log('client error', client, err.message, err.stack)
-})
-
-aedes.on('publish', function (packet, client) {
-  if (packet && packet.payload) {
-    console.log('publish packet:', packet.payload.toString())
+  // Socket listening 
+  try {
+  
+    io.on("connection", (socket) => {
+  
+      console.log(`User with id: ${socket.id} connected!`);
+  
+      socket.on("disconnect", () => {
+        console.log(`User with id: ${socket.id} disconnected`);
+      });
+    
+  
+      // io.emit("Chart-Data",message)
+      socket.on("Chart-Data", (data) => {
+        // console.log(data);
+        
+        socket.broadcast.emit("Chart-Data", data);
+      });
+      socket.on("RGB-Data", (data) => {
+        // console.log(data);
+        socket.broadcast.emit("RGB-Data", data);
+      });
+  
+    });
+  
+    //admin-ui
+    instrument(io, { auth: false });
+  } catch (error) {
+    console.log(`Could not start the server, ${error}`);
   }
-  if (client) {
-    console.log('message from client', client.id)
-  }
-})
-
-aedes.on('subscribe', function (subscriptions, client) {
-  if (client) {
-    console.log("");
-    console.log('subscribe from client', subscriptions, client.id)
-    console.log("");
-  }
-})
-
-aedes.on('client', function (client) {
-  console.log('new client', client.id)
-})
-
+  

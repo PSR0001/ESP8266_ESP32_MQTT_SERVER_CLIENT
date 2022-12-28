@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="JS/mqtt456.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.0/socket.io.js" integrity="sha512-nYuHvSAhY5lFZ4ixSViOwsEKFvlxHMU2NHts1ILuJgOS6ptUmAGt/0i5czIgMOahKZ6JN84YFDA+mCdky7dD8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="CSS/style.css">
     <title>MQTT-Client🚀</title>
 </head>
@@ -19,6 +19,7 @@
                 <h3>MQTT-Client🚀</h3>
                 <h3>
                     <div class="flex-custom font-custom google-font">
+                        <span id="isConnect"></span>
                         <strong>Version : </strong>
                         <p class="verson">0.15.0</p>
                     </div>
@@ -43,16 +44,20 @@
                                             aria-label="Close"></button>
                                     </div>
 
+<!-- ============================================Form Modal==================================================== -->
+
+
+                                    <form id="formMqttData" >
+
                                     <div class="modal-body container">
                                         <h4 class="font-custom">Connection Details</h4>
                                         <hr>
-                                        <form action="">
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
                                                     <div class="form-outline">
                                                         <label class="form-label font-custom"
                                                             for="form3Example1">Connection name</label>
-                                                        <input type="text" id="form3Example1" class="form-control" />
+                                                        <input type="text" id="form3Example1" value="" class="form-control" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-4">
@@ -86,67 +91,74 @@
                                                             </option>
                                                             <option>ws://</option>
                                                         </select>
-                                                        <input type="text" id="ipaddress" class="form-control" />
+                                                        <input type="text" id="ipaddress" class="form-control" value=""/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
                                                         <label class="form-label font-custom"
                                                             for="form3Example1">Port</label>
-                                                        <input type="text" id="port" class="form-control" />
+                                                        <input type="text" id="port" class="form-control" required  maxlength="4"/>
                                                     </div>
                                                 </div>
                                                 <!-- client id -->
                                                 <div class="  row">
                                                     <div class="col-md-6 ">
                                                         <div class="form-outline">
-                                                            <label class="form-label font-custom"
+                                                            <label class=" font-custom"
                                                                 for="form3Example1">Client id</label>
-                                                            <input type="text" id="client-id2" class="form-control"
-                                                                value="lens_TfSXEgSF8lmU23OoGZ4K7EDrnVn" />
+                                                            <input type="text" id="client-id2" 
+                                                                value="" minlength="4" required/>
                                                         </div>
                                                     </div>
 
 
                                                     <div class="col-md-6  col align-self-end mt-1">
-                                                        <div class="form-outline">
-                                                            <button type="text" id="client-id"
-                                                                class="form-control btn btn-primary font-custom">
+                                                        <div class="">
+                                                            <!-- <button onclick="generateClientId()" type="text" id="client-id"
+                                                                class=" btn btn-primary font-custom">
                                                                 Genarate Client id
-                                                            </button>
+                                                            </button> -->
+                                                            <button onclick="generateClientId()"  type="button" class="btn btn-primary"> Genarate Client id</button>
                                                         </div>
                                                     </div>
                                                 </div>
 
-
-
                                                 <!-- client credentials -->
                                                 <div class="modal-body container mt-5">
-                                                    <h4 class="font-custom">Credentials</h4>
+                                                    <h4 class="font-custom"></h4>
+                                                    <div class="form-check">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            Credentials
+                                                        </label>
+                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        
+                                                      </div>
                                                     <hr>
                                                     <!-- Email input -->
                                                     <div class="form-outline">
                                                         <label class="form-label font-custom"
                                                             for="form2Example1">Username</label>
-                                                        <input type="text" id="name-client" class="form-control" />
+                                                        <input type="text" id="name-client" class="form-control"  value=""/>
                                                     </div>
 
                                                     <!-- Password input -->
                                                     <div class="form-outline ">
                                                         <label class="form-label font-custom"
                                                             for="form2Example2">Password</label>
-                                                        <input type="password" id="password" class="form-control" />
+                                                        <input type="password" id="password" class="form-control" value="" />
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
+                                      
                                     </div>
 
                                     <div class="modal-footer d-flex justify-content-between">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Create connection</button>
+                                        <button type="button" onclick="submitMqttData()" class="btn btn-primary" id="create_connection">Create connection</button>
                                     </div>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -157,7 +169,7 @@
                 <div class="second-custom">
                     <div class="header-custom">
                         <!-- add toggle javascript -->
-                        <button  type="button" id="toggle" class="arow-button" data-bs-toggle="collapse"
+                        <button type="button" id="toggle" class="arow-button" data-bs-toggle="collapse"
                             data-bs-target="#collapseWidthExample12345" aria-expanded="false"
                             aria-controls="collapseWidthExample12345">></button>
                     </div>
@@ -166,7 +178,7 @@
                             <div>
                                 <h3>Connection : </h3>
                             </div>
-                            <button  type="button " class="left-button" data-bs-toggle="collapse"
+                            <button type="button " class="left-button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExample" aria-expanded="true"
                                 aria-controls="collapseExample">^</button>
                         </div>
@@ -289,11 +301,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-        <!-- <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" integrity="sha256-DB4GAFiyqysd5z3QJsC20rSBBK6syd7qJlL+NndQ8HY=" crossorigin="anonymous"></script> -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script> -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" integrity="sha256-nCs2/LIAkyo7IJqIifneTTqtHXDyCaaH2xYxDr0axrI=" crossorigin="anonymous"></script> -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script> -->
-        <script src="JS/script.js"></script>
+    <script src="JS/script.js"></script>
+    <script src="JS/socket.js"></script>
 </body>
 
 </html>
