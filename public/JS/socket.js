@@ -12,7 +12,7 @@ const socket = io(URL);
  socket.on("subscriver", (data) => {
 
     let addMessage = `
-    <div class="card card-body message-class ">
+    <div class="card card-body message-class " >
         <div>
             <div class="d-flex">
                 <h5 class="prevent-select">Message: </h5>
@@ -29,6 +29,7 @@ const socket = io(URL);
     </div>`
 
     let messageBox = document.createElement("div")
+    // let messageBox 
     messageBox.innerHTML = addMessage
     document.getElementById("collapseExample12").appendChild(messageBox); 
 });

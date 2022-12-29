@@ -65,7 +65,7 @@ function mqttPublish(){
 
 
 function deleteBox(e) {
-  e.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
+  e.parentElement.parentElement.parentElement.parentElement.remove()
 }
 
 // --------------------------------------------------------------------

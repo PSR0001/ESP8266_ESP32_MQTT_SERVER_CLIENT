@@ -28,7 +28,7 @@ server.listen(port, () => {
 io.on("connection", (socket) => {
   
 
-    io.emit("subscriver", "connected");
+    // io.emit("subscriver", "connected");
  
   
   console.log(`User with id: ${socket.id} connected!`);
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("publish",(data)=>{
-    console.log(data)
+    console.log("Publish Data"+data)
 
     client2.publish(data.topic, data.value,{ qos: 0, retain: false })
   })
@@ -55,9 +55,6 @@ io.on("connection", (socket) => {
 
 //admin-ui
 instrument(io, { auth: false });
-
-
-
 
 //HTTP POST request coming ...
 app.post('/mqtt_values',(req,res)=>{
