@@ -62,3 +62,10 @@ function mqttPublish(){
   }
     socket.emit("publish",pubData)
 }
+
+
+function deleteBox(e) {
+  e.parentElement.parentElement.parentElement.parentElement.parentElement.remove()
+}
+
+// --------------------------------------------------------------------

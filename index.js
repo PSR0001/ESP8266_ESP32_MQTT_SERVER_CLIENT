@@ -6,7 +6,6 @@ const http = require('http');
 const { instrument } = require("@socket.io/admin-ui");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { log } = require('console');
 const io = new Server(server, {
   cors: {
     origin: ["https://admin.socket.io"],

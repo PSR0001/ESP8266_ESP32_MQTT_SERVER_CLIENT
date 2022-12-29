@@ -156,16 +156,23 @@ body{
     height: 350px;
     overflow-y: scroll;
 }
-.message-class{
-    
-    height:100px;
-}
-
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
 /* rotate class */
 .rotate {
     transform: rotate(180deg);
     transition-delay: 2s;
   }
+
+.time{
+    font-size: 12px; 
+    text-align: center; 
+    margin-top: 2px;
+}
+
 
 
 /* slide bar */
