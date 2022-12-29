@@ -28,6 +28,7 @@ function submitMqttData() {
             connect_button.textContent = "connected"
             connect_button.style.backgroundColor = "green"
             connect_button.disabled = true;
+            socket.emit("client_ready",{"client": true})
         }
      });
 }
